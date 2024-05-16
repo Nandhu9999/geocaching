@@ -1,0 +1,21 @@
+{
+  "name": "geocaching",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --trace-warnings --watch server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@fastify/formbody": "^7.4.0",
+    "@fastify/static": "^7.0.4",
+    "@fastify/view": "^9.1.0",
+    "fastify": "^4.27.0",
+    "handlebars": "^4.7.8"
+  }
+}

@@ -7,6 +7,9 @@
     "dev": "node --trace-warnings --watch server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": ">=20.11.1"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

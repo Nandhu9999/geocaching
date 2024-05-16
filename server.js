@@ -22,8 +22,8 @@ fastify.register(require("@fastify/view"), {
 
 // routes
 fastify.register(require("./routes/rootRoutes.js"));
-fastify.register(require("./routes/userRoutes.js"));
-fastify.register(require("./routes/geocacheRoutes.js"));
+// fastify.register(require("./routes/userRoutes.js"));
+// fastify.register(require("./routes/geocacheRoutes.js"));
 
 // start server
 fastify.listen({ port: PORT, host: HOST }, function (err, address) {

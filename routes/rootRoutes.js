@@ -11,6 +11,9 @@ async function rootRoutes(fastify, options) {
   fastify.get("/forgot", (request, reply) => {
     return reply.view("/src/pages/forgot", {});
   });
+  fastify.get("/healthz", (request, reply) => {
+    return reply.send({ status: "OK" }).code(200);
+  });
   /*
    *  APPLICATION RELATED ROUTES
    */

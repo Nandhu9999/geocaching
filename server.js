@@ -1,7 +1,7 @@
 const path = require("path");
 const fastify = require("fastify")({ logger: false });
 // server hosting configurations
-const PORT = 3000;
+const PORT = process.env.PORT || 4000;
 const HOST = "0.0.0.0" || "127.0.0.1" || "localhost";
 // server static files
 fastify.register(require("@fastify/static"), {
@@ -22,8 +22,8 @@ fastify.register(require("@fastify/view"), {
 
 // routes
 fastify.register(require("./routes/rootRoutes.js"));
-// fastify.register(require("./routes/userRoutes.js"));
-// fastify.register(require("./routes/geocacheRoutes.js"));
+fastify.register(require("./routes/userRoutes.js"));
+fastify.register(require("./routes/geocacheRoutes.js"));
 
 // start server
 fastify.listen({ port: PORT, host: HOST }, function (err, address) {

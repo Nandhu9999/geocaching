@@ -1,15 +1,20 @@
+// GEOCACHING SERVER SCRIPT
 const path = require("path");
 const fastify = require("fastify")({ logger: false });
+
 // server hosting configurations
 const PORT = process.env.PORT || 4000;
 const HOST = "0.0.0.0" || "127.0.0.1" || "localhost";
+
 // server static files
 fastify.register(require("@fastify/static"), {
   root: path.join(__dirname, "public"),
   prefix: "/",
 });
+
 // parse form body
 fastify.register(require("@fastify/formbody"));
+
 // import handlebars
 fastify.register(require("@fastify/view"), {
   engine: { handlebars: require("handlebars") },

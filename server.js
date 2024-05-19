@@ -21,8 +21,38 @@ fastify.register(require("@fastify/view"), {
   options: {
     partials: {
       head: "/src/partials/head.handlebars",
+      navbar: "/src/partials/navbar.handlebars",
+      login: "/src/partials/login.handlebars",
+      locationPermission: "/src/partials/locationPermission.handlebars",
     },
   },
+});
+const handlebars = require("handlebars");
+handlebars.registerHelper("ifCond", function (v1, operator, v2, options) {
+  switch (operator) {
+    case "==":
+      return v1 == v2 ? options.fn(this) : options.inverse(this);
+    case "===":
+      return v1 === v2 ? options.fn(this) : options.inverse(this);
+    case "!=":
+      return v1 != v2 ? options.fn(this) : options.inverse(this);
+    case "!==":
+      return v1 !== v2 ? options.fn(this) : options.inverse(this);
+    case "<":
+      return v1 < v2 ? options.fn(this) : options.inverse(this);
+    case "<=":
+      return v1 <= v2 ? options.fn(this) : options.inverse(this);
+    case ">":
+      return v1 > v2 ? options.fn(this) : options.inverse(this);
+    case ">=":
+      return v1 >= v2 ? options.fn(this) : options.inverse(this);
+    case "&&":
+      return v1 && v2 ? options.fn(this) : options.inverse(this);
+    case "||":
+      return v1 || v2 ? options.fn(this) : options.inverse(this);
+    default:
+      return options.inverse(this);
+  }
 });
 
 // routes

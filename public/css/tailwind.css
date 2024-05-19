@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+.customOutline {
+  text-shadow: 2px 2px 4px black;
+}
+.nodrag {
+  pointer-events: none;
+}

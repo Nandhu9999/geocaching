@@ -13,7 +13,17 @@
 
   <div id="map" class="w-screen" style="height: 100vh;"></div>
 
-  {{!-- {{> questionPopup }} --}}
+  <div id="gameNavbar" style="z-index:998;" class="text-white fixed top-0 left-0 w-full h-12 flex items-center justify-between px-2 pt-2">
+    <div class="h-full aspect-square">o</div>
+    <div class="flex flex-col justify-center items-center">
+      <div>{{= timeIcon }}</div>
+      <div id="currentTime">00:00</div>
+    </div>
+    <div class="h-full aspect-square">x</div>
+  </div>
+
+  {{> sideBar }}
+  {{> questionPopup }}
 </body>
 <script src="/js/mapScript.js" type="module"></script>
 <script src="/js/gameScript.js" type="module"></script>

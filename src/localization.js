@@ -90,7 +90,52 @@ function convertLocalizationFormat(oldFormat) {
 
 const LOCALIZATION = convertLocalizationFormat(RAW_LOCALIZATION);
 
+async function getIndiaTime() {
+  const response = await fetch(
+    "https://timeapi.io/api/Time/current/zone?timeZone=Asia/Kolkata"
+  );
+  return await response.json();
+}
+
+function getSunIndex(hours) {
+  if (hours < 6) {
+    return 0;
+  } else if (hours < 10) {
+    return 1;
+  } else if (hours < 12) {
+    return 2;
+  } else if (hours < 13) {
+    return 3;
+  } else if (hours < 15) {
+    return 4;
+  } else if (hours < 17) {
+    return 5;
+  } else if (hours < 19) {
+    return 6;
+  } else if (hours < 22) {
+    return 7;
+  } else {
+    return 8;
+  }
+}
+
+function getTimeIcon(idx) {
+  return `<svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="w-6 h-6"
+      viewBox="0 0 16 16"
+    >
+      <path d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708" />
+    </svg>`;
+}
+
 module.exports = {
   LANGUAGES_LIST,
   LOCALIZATION,
+  getIndiaTime,
+  getSunIndex,
+  getTimeIcon,
 };

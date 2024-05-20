@@ -1,22 +1,24 @@
 const UNI_LOCATION = [10.8993923, 76.9029521];
-
+const MAX_MAP_ZOOM = 20;
 const ICON_SIZE = [50, 50];
 
-var map = L.map("map").setView(UNI_LOCATION, 19);
-
+var map = L.map("map");
+map.setView(UNI_LOCATION, MAX_MAP_ZOOM);
 L.tileLayer("http://{s}.google.com/vt?lyrs=s&x={x}&y={y}&z={z}", {
-  maxZoom: 20,
+  maxZoom: MAX_MAP_ZOOM,
   subdomains: ["mt0", "mt1", "mt2", "mt3"],
 }).addTo(map);
 
-map.touchZoom.disable();
-map.doubleClickZoom.disable();
-map.scrollWheelZoom.disable();
-map.boxZoom.disable();
-map.keyboard.disable();
-document.querySelector(".leaflet-control-zoom").style.visibility = "hidden";
-document.querySelector(".leaflet-control-attribution").style.visibility =
-  "hidden";
+if (true) {
+  map.touchZoom.disable();
+  map.doubleClickZoom.disable();
+  map.scrollWheelZoom.disable();
+  map.boxZoom.disable();
+  map.keyboard.disable();
+  document.querySelector(".leaflet-control-zoom").style.visibility = "hidden";
+  document.querySelector(".leaflet-control-attribution").style.visibility =
+    "hidden";
+}
 
 export function addTreeMarkerToMap(idx, location, popupText, onClick) {
   var treeIcon = L.icon({
@@ -70,10 +72,18 @@ export function getUserLocation() {
   });
 }
 
-// addTreeMarkerToMap(UNI_LOCATION);
-// var circle = L.circle([51.508, -0.11], {
-//     color: 'red',
-//     fillColor: '#f03',
-//     fillOpacity: 0.5,
-//     radius: 500
-// }).addTo(map);
+export function updateMapView(location) {
+  map.setView(location);
+}
+export function updateUserLocation(location, distance) {
+  if (userCircle) {
+    map.removeLayer(userCircle);
+  }
+  userCircle = L.circle(location, {
+    color: "red",
+    fillColor: "#f03",
+    fillOpacity: 0.5,
+    radius: distance || 50,
+  }).addTo(map);
+}
+let userCircle = undefined;

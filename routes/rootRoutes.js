@@ -1,4 +1,10 @@
-const { LOCALIZATION, LANGUAGES_LIST } = require("../src/localization");
+const {
+  LOCALIZATION,
+  LANGUAGES_LIST,
+  getIndiaTime,
+  getTimeIcon,
+  getSunIndex,
+} = require("../src/localization");
 
 async function rootRoutes(fastify, options) {
   fastify.get("/", (request, reply) => {
@@ -32,7 +38,10 @@ async function rootRoutes(fastify, options) {
   /*
    *  APPLICATION RELATED ROUTES
    */
-  fastify.get("/game", (request, reply) => {
+  fastify.get("/game", async (request, reply) => {
+    const time = await getIndiaTime();
+    const sunIndex = getSunIndex(time.hours);
+    const timeIcon = getTimeIcon(sunIndex);
     return reply.view("/src/pages/main.hbs", {});
   });
   fastify.get("/collection", (request, reply) => {

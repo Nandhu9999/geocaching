@@ -11,8 +11,6 @@ async function rootRoutes(fastify, options) {
     // EQUIVALENT TO LOGIN POST ROUTE
     fastify.post("/", (request, reply) => {
       const { email, password } = request.body;
-      console.log(email, password);
-      console.log("login attempted");
       if (email === "abc@gmail.com" && password === "abc123") {
         return reply.redirect("/game#");
       } else {
@@ -29,26 +27,6 @@ async function rootRoutes(fastify, options) {
     return reply.view("/src/pages/forgot", {});
   });
   fastify.get("/healthz", (request, reply) => {
-    return reply.send({ status: "OK" }).code(200);
-  });
-  fastify.get("/localization", (request, reply) => {
-    const { language } = request.body;
-    if (LANGUAGES_LIST.includes(language)) {
-      switch (language) {
-        case "english":
-          request.session.language = "en";
-          break;
-        case "tamil":
-          request.session.language = "ta";
-          break;
-        case "telugu":
-          request.session.language = "te";
-          break;
-        case "malayalam":
-          request.session.language = "ml";
-          break;
-      }
-    }
     return reply.send({ status: "OK" }).code(200);
   });
   /*

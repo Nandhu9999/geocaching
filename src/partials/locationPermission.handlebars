@@ -1,6 +1,7 @@
 <div
   id="locationPermissionPopup"
-  class="w-screen h-screen fixed grid place-content-center z-50 bg-black bg-opacity-50"
+  style="z-index:998"
+  class="w-screen h-screen fixed grid place-content-center bg-black bg-opacity-50 hidden"
 >
   <div class="mx-auto md:max-w-md mt-10 bg-white rounded-lg shadow-lg p-4">
     <h2 class="text-center text-xl font-bold">Location Permission</h2>
@@ -8,7 +9,7 @@
       you nearby geocaches.</p>
     <br />
     <p class="text-justify">It is unplayable without reliable location access,
-      so please give allow it.</p>
+      so please allow it.</p>
     <br />
     <hr />
     <div class="flex justify-center mt-4">

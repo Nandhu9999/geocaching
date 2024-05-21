@@ -4,23 +4,25 @@
     <title>Amrita Trees | Game</title>
     <link rel="stylesheet" href="/css/styles.css" />
   </head>
-  <script src="/js/app.js"></script>
+  <script src="/js/app.js" type="module"></script>
   <link rel="stylesheet" href="/leaflet/leaflet.css"/>
   <script src="/leaflet/leaflet.js"></script>
 
 <body class="w-screen h-screen relative bg-slate-800 overflow-hidden">
+  <div id="TailwindRequiredStyles" class="hidden translate-x-[300px]">
+
+  </div>
+
   {{> locationPermission }}
 
-  <div id="map" class="w-screen" style="height: 100vh;"></div>
+  <div id="mapWrapper" class="w-screen relative transition-all">
+    <div id="map" class="w-screen" style="height: 100vh;"></div>
+    <div id="mapOverlay" style="z-index:999;" class="w-screen h-screen absolute top-0 left-0 bg-black opacity-20 hidden">
 
-  <div id="gameNavbar" style="z-index:998;" class="text-white fixed top-0 left-0 w-full h-12 flex items-center justify-between px-2 pt-2">
-    <div class="h-full aspect-square">o</div>
-    <div class="flex flex-col justify-center items-center">
-      <div>{{ timeIcon }}</div>
-      <div id="currentTime">00:00</div>
     </div>
-    <div class="h-full aspect-square">x</div>
   </div>
+
+  {{> gameNavbar}}
 
   {{> sideBar }}
   {{> questionPopup }}

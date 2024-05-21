@@ -24,3 +24,7 @@ html {
     background-position: 20% 50%;
   }
 }
+
+.time-pulse {
+  animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

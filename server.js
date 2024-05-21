@@ -26,6 +26,7 @@ fastify.register(require("@fastify/view"), {
       locationPermission: "/src/partials/locationPermission.handlebars",
       questionPopup: "/src/partials/questionPopup.handlebars",
       sideBar: "/src/partials/sideBar.handlebars",
+      gameNavbar: "/src/partials/gameNavbar.handlebars",
     },
   },
 });

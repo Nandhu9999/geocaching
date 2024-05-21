@@ -44,8 +44,8 @@ async function rootRoutes(fastify, options) {
     const timeIcon = getTimeIcon(sunIndex);
     return reply.view("/src/pages/main.hbs", {});
   });
-  fastify.get("/collection", (request, reply) => {
-    return reply.view("/src/pages/collection.hbs", {});
+  fastify.get("/inventory", (request, reply) => {
+    return reply.view("/src/pages/inventory.hbs", {});
   });
   fastify.get("/leaderboards", (request, reply) => {
     return reply.view("/src/pages/leaderboards.hbs", {});

@@ -84,6 +84,24 @@ async function gameLoop() {
     updateUserLocation([UserLocations.last.lat, UserLocations.last.lng], 5);
     // updateMapView([UserLocations.last.lat, UserLocations.last.lng]);
   }
+
+  // current Time
+  const currentDateTime = new Date();
+  var hours = currentDateTime.getHours();
+  var minutes = currentDateTime.getMinutes();
+  var seconds = currentDateTime.getSeconds();
+  var suffix = "am";
+  if (hours > 12) {
+    hours = hours - 12;
+    suffix = "pm";
+  }
+  const timeDisplay0 = `  ${hours > 9 ? "" : "0"}${hours}:${
+    minutes > 9 ? "" : "0"
+  }${minutes}${suffix}`;
+  const timeDisplay1 = `${hours > 9 ? "" : "0"}${hours}:${
+    minutes > 9 ? "" : "0"
+  }${minutes}:${seconds > 9 ? "" : "0"}${seconds}${suffix}`;
+  document.querySelector("#currentTime").innerText = timeDisplay0;
 }
 
 function closeQuesitonPopup() {

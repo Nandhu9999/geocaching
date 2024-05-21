@@ -9,35 +9,46 @@ function requestLocationAccess() {
       document.querySelector("#locationPermissionPopup").style.display = "none";
     },
     (error) => {
+      const erroCodesList = [
+        "",
+        "PERMISSION_DENIED",
+        "POSITION_UNAVAILABLE",
+        "TIMEOUT",
+      ];
       document.querySelector("#locationPermissionPopup .error").innerHTML =
-        `<b>${error.message}</b>` +
+        `<b style="text-align:center;">[${erroCodesList[error.code]}] <br /> ${
+          error.message
+        }</b>` +
         "<br />" +
-        "<ul style='width:fit-content;'><li style='list-style:disc;'>Check your Internet Connection</li><li style='list-style:disc;'>Check your device location capabilities</li></ul>";
+        "<ul style='width:90%;'><li style='list-style:disc;'>Check your Internet Connection</li><li style='list-style:disc;'>Check your device location capabilities</li></ul>";
       console.error(error); // Handle the error
     }
   );
 }
-$("#locationAcceptButton").addEventListener("click", requestLocationAccess);
+
+// On /game For Location Permission
+if (requestLocationAccess) {
+  $("#locationAcceptButton")?.addEventListener("click", requestLocationAccess);
+}
 
 function gameMenuTriggered() {
-  console.log("Game Menu Triggered");
   const sideBar = document.querySelector("#sideBar");
   sideBar.classList.toggle("activated");
   if (sideBar.classList.contains("activated")) {
     sideBar.classList.add("translate-x-0");
     sideBar.classList.remove("translate-x-[-300px]");
     $("#gameNavbar").classList.add("translate-x-[300px]");
-    $("#mapWrapper").classList.add("translate-x-[300px]");
-    mapOverlay.classList.remove("hidden");
+    $("#contentWrapper").classList.add("translate-x-[300px]");
+    contentOverlay.classList.remove("hidden");
   } else {
     sideBar.classList.remove("translate-x-0");
     sideBar.classList.add("translate-x-[-300px]");
     $("#gameNavbar").classList.remove("translate-x-[300px]");
-    $("#mapWrapper").classList.remove("translate-x-[300px]");
-    mapOverlay.classList.add("hidden");
+    $("#contentWrapper").classList.remove("translate-x-[300px]");
+    contentOverlay.classList.add("hidden");
   }
 }
 const gameMenuButton = $("#gameMenuButton");
-const mapOverlay = $("#mapOverlay");
+const contentOverlay = $("#contentOverlay");
 gameMenuButton.addEventListener("click", gameMenuTriggered);
-mapOverlay.addEventListener("click", gameMenuTriggered);
+contentOverlay.addEventListener("click", gameMenuTriggered);

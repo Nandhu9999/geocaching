@@ -95,13 +95,15 @@ async function gameLoop() {
     hours = hours - 12;
     suffix = "pm";
   }
-  const timeDisplay0 = `  ${hours > 9 ? "" : "0"}${hours}:${
-    minutes > 9 ? "" : "0"
-  }${minutes}${suffix}`;
-  const timeDisplay1 = `${hours > 9 ? "" : "0"}${hours}:${
-    minutes > 9 ? "" : "0"
-  }${minutes}:${seconds > 9 ? "" : "0"}${seconds}${suffix}`;
-  document.querySelector("#currentTime").innerText = timeDisplay0;
+  hours = hours > 9 ? hours : "0" + hours;
+  minutes = minutes > 9 ? minutes : "0" + minutes;
+  seconds = seconds > 9 ? seconds : "0" + seconds;
+  const timeDisplay0 = `  ${hours}:${minutes}${suffix}`;
+  const timeDisplay1 = `${hours}:${minutes}:${seconds}${suffix}`;
+  // document.querySelector("#currentTime").innerText = timeDisplay0;
+  document.querySelector(
+    "#currentTime"
+  ).innerHTML = `${hours}<span class="time-pulse">:</span>${minutes}${suffix}`;
 }
 
 function closeQuesitonPopup() {

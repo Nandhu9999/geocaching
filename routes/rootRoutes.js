@@ -9,6 +9,38 @@ const {
 const INVENTORY = {
   found: [
     {
+      name: "tree tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree tree tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "treetree tree tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
       name: "tree",
       icon: "🌲",
     },
@@ -26,6 +58,166 @@ const INVENTORY = {
     },
     {
       name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree tree tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "treetree tree tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree tree tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "treetree tree tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "tree tree tree tree",
+      icon: "🌲",
+    },
+    {
+      name: "treetree tree tree tree",
       icon: "🌲",
     },
     {
@@ -84,7 +276,7 @@ const ACCOUNT = {
   count: INVENTORY.found.length,
 };
 const GAME = {
-  maxCount: 30,
+  maxCount: 100,
 };
 
 async function rootRoutes(fastify, options) {

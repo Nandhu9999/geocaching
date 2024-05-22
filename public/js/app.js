@@ -16,9 +16,9 @@ function requestLocationAccess() {
         "TIMEOUT",
       ];
       document.querySelector("#locationPermissionPopup .error").innerHTML =
-        `<b style="text-align:center;">[${erroCodesList[error.code]}] <br /> ${
-          error.message
-        }</b>` +
+        `<b style="text-align:center;">[${
+          erroCodesList[error.code]
+        } ERROR] <br /> ${false && error.message}</b>` +
         "<br />" +
         "<ul style='width:90%;'><li style='list-style:disc;'>Check your Internet Connection</li><li style='list-style:disc;'>Check your device location capabilities</li></ul>";
       console.error(error); // Handle the error

@@ -49,3 +49,20 @@ html {
   font-weight: 400;
   font-style: normal;
 }
+
+.gameIcon {
+  background-image: linear-gradient(#646464, #323232);
+  border: 2px solid black;
+}
+
+.customMarkerAnimation {
+  position: absolute;
+  top: 0px;
+  animation: treeJump 500ms infinite alternate ease-in-out;
+}
+
+@keyframes treeJump {
+  to {
+    top: -20px;
+  }
+}

@@ -1,4 +1,8 @@
 export const TREES_LIST = [
+  // {
+  //   scientific_name: "dev",
+  //   coords: "11.0034944, 76.9785856",
+  // },
   {
     scientific_name: "Allamanda cathartica",
     coords: "10.9036130, 76.8978619",

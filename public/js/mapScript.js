@@ -9,15 +9,26 @@ L.tileLayer("http://{s}.google.com/vt?lyrs=s&x={x}&y={y}&z={z}", {
   subdomains: ["mt0", "mt1", "mt2", "mt3"],
 }).addTo(map);
 
-if (true) {
-  map.touchZoom.disable();
-  map.doubleClickZoom.disable();
-  map.scrollWheelZoom.disable();
-  map.boxZoom.disable();
-  map.keyboard.disable();
-  document.querySelector(".leaflet-control-zoom").style.visibility = "hidden";
-  document.querySelector(".leaflet-control-attribution").style.visibility =
-    "hidden";
+export function disableMapControl(state) {
+  console.log("disable map control", state);
+  if (state) {
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.scrollWheelZoom.disable();
+    map.boxZoom.disable();
+    map.keyboard.disable();
+    map.dragging.disable();
+    document.querySelector(".leaflet-control-zoom").style.visibility = "hidden";
+    document.querySelector(".leaflet-control-attribution").style.visibility =
+      "hidden";
+  } else if (!state) {
+    map.touchZoom.enable();
+    map.doubleClickZoom.enable();
+    map.scrollWheelZoom.enable();
+    map.boxZoom.enable();
+    map.keyboard.enable();
+    map.dragging.enable();
+  }
 }
 
 export function addTreeMarkerToMap(idx, location, popupText, onClick) {
@@ -33,7 +44,11 @@ export function addTreeMarkerToMap(idx, location, popupText, onClick) {
 
   const marker = L.marker(location, { icon: treeIcon })
     .on("click", () => {
+      marker._icon.classList.add("customMarkerAnimation");
       onClick(idx);
+      setTimeout(() => {
+        marker._icon.classList.remove("customMarkerAnimation");
+      }, 3000);
     })
     .addTo(map);
 
@@ -72,8 +87,8 @@ export function getUserLocation() {
   });
 }
 
-export function updateMapView(location) {
-  map.setView(location);
+export function updateMapView(location, zoom = MAX_MAP_ZOOM) {
+  map.setView(location, zoom);
 }
 export function updateUserLocation(location, distance) {
   if (userCircle) {

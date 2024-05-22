@@ -1,6 +1,7 @@
 // GEOCACHING SERVER SCRIPT
 const path = require("path");
 const fastify = require("fastify")({ logger: false });
+const db = require("./database");
 
 // server hosting configurations
 const PORT = process.env.PORT || 4000;
@@ -59,6 +60,9 @@ handlebars.registerHelper("ifCond", function (v1, operator, v2, options) {
       return options.inverse(this);
   }
 });
+
+// db setup
+db.sync().then(() => console.log("db is ready!"));
 
 // routes
 fastify.register(require("./routes/rootRoutes.js"));

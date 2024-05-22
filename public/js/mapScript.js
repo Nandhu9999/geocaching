@@ -1,3 +1,5 @@
+import { $ } from "./app.js";
+
 const UNI_LOCATION = [10.8993923, 76.9029521];
 const MAX_MAP_ZOOM = 20;
 const ICON_SIZE = [50, 50];
@@ -18,9 +20,6 @@ export function disableMapControl(state) {
     map.boxZoom.disable();
     map.keyboard.disable();
     map.dragging.disable();
-    document.querySelector(".leaflet-control-zoom").style.visibility = "hidden";
-    document.querySelector(".leaflet-control-attribution").style.visibility =
-      "hidden";
   } else if (!state) {
     map.touchZoom.enable();
     map.doubleClickZoom.enable();
@@ -30,6 +29,8 @@ export function disableMapControl(state) {
     map.dragging.enable();
   }
 }
+$(".leaflet-control-zoom").style.visibility = "hidden";
+$(".leaflet-control-attribution").style.visibility = "hidden";
 
 export function addTreeMarkerToMap(idx, location, popupText, onClick) {
   var treeIcon = L.icon({
@@ -86,7 +87,6 @@ export function getUserLocation() {
     }
   });
 }
-
 export function updateMapView(location, zoom = MAX_MAP_ZOOM) {
   map.setView(location, zoom);
 }
@@ -97,7 +97,7 @@ export function updateUserLocation(location, distance) {
   userCircle = L.circle(location, {
     color: "red",
     fillColor: "#f03",
-    fillOpacity: 0.5,
+    fillOpacity: 0.25,
     radius: distance || 50,
   }).addTo(map);
 }

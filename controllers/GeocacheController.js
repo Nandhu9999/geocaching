@@ -1,6 +1,10 @@
+const db = require("../database");
+const Geocache = require("../models/Geocache");
+
 module.exports = {
-  getGeocaches: (request, reply) => {
-    return reply.send({ path: "getGeocaches" });
+  getGeocaches: async (request, reply) => {
+    const geocacheList = await Geocache.findAll();
+    return reply.send({ path: "getGeocaches", geocacheList });
   },
   getGeocacheById: (request, reply) => {
     return reply.send({ path: "getGeocacheById" });

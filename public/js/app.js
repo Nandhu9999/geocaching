@@ -20,7 +20,7 @@ function requestLocationAccess() {
           erroCodesList[error.code]
         } ERROR]</b>` +
         "<br />" +
-        "<ul style='width:90%;'><li style='list-style:disc;'>Check your Internet Connection</li><li style='list-style:disc;'>Check your device location capabilities</li></ul>";
+        "<ul style='width:90%;'><li style='list-style:disc;'>Check your Internet Connection</li><li style='list-style:disc;'>Check your device location capabilities</li><li style='list-style:disc;'>Wait for location calibration</li></ul>";
       console.error(error); // Handle the error
     }
   );

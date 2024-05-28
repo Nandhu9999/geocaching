@@ -6,7 +6,11 @@
     <link rel="preload" as="image" href="/assets/heroTree.jpg" />
   </head>
   <body class="w-screen overflow-x-hidden relative bg-slate-800">
-
+    
+    <div
+  id="TailwindRequiredStyles"
+  class="hidden translate-x-[300px] animate-bounce animate-pulse bg-slate-800"
+></div>
     {{!-- APPLICATION NAVBAR --}}
     {{> navbar }}
 
@@ -90,7 +94,7 @@
       Login to Your Account!
     </a>
 
-    {{> login }}
+    {{> loginForm }}
 
     <footer class="bg-slate-800 py-2 text-center text-white">
       <div class="container mx-auto">

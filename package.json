@@ -15,9 +15,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@fastify/cookie": "^9.3.1",
     "@fastify/formbody": "^7.4.0",
+    "@fastify/session": "^10.9.0",
     "@fastify/static": "^7.0.4",
     "@fastify/view": "^9.1.0",
+    "bcrypt": "^5.1.1",
     "fastify": "^4.27.0",
     "handlebars": "^4.7.8",
     "sequelize": "^6.37.3",

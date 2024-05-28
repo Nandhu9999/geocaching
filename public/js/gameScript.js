@@ -65,22 +65,15 @@ const UserLocations = {
   },
 };
 
-async function gameLoop() {
-  const userLocation = await getUserLocation();
-  if (userLocation.status == "success") {
-    UserLocations.add({
-      valid: true,
-      lat: userLocation.lat,
-      lng: userLocation.lng,
-    });
-  } else {
-    UserLocations.add({
-      valid: false,
-      lat: 0,
-      lng: 0,
-    });
-  }
-  if (UserLocations.last.valid && $("#liveLocationSetting").checked) {
+async function GEOLOCATION_UPDATED(pos) {
+  UserLocations.add({
+    valid: true,
+    lat: pos.coords.latitude,
+    lng: pos.coords.longitude,
+  });
+
+  // update live location on map
+  if (UserLocations.last.valid && $("#liveLocationSetting")?.checked) {
     updateUserLocation([UserLocations.last.lat, UserLocations.last.lng], 5);
     updateMapView([UserLocations.last.lat, UserLocations.last.lng]);
   }
@@ -100,24 +93,33 @@ async function gameLoop() {
   seconds = seconds > 9 ? seconds : "0" + seconds;
   const timeDisplay0 = `  ${hours}:${minutes}${suffix}`;
   const timeDisplay1 = `${hours}:${minutes}:${seconds}${suffix}`;
-  $(
-    "#currentTime"
-  ).innerHTML = `${hours}<span class="time-pulse">:</span>${minutes}${suffix}`;
+  $("#currentTime").innerHTML = `${
+    hours == 0 ? "12" : hours
+  }<span class="time-pulse">:</span>${minutes}${suffix}`;
 }
 
 function closeQuesitonPopup() {
-  questionPopup.classList.add("hidden");
+  $("#questionPopup").classList.add("hidden");
+}
+
+function READ_ERROR(err) {
+  console.error(`ERROR(${err.code}): ${err.message}`);
 }
 
 function Main() {
   getUserCurrentLocation();
-  setInterval(gameLoop, 1000);
+  // setInterval(gameLoop, 1000);
+  navigator.geolocation.watchPosition(GEOLOCATION_UPDATED, READ_ERROR, {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
+  });
 
-  $("#questionPopup")
-    .querySelector(".quitButton")
-    .addEventListener("click", closeQuesitonPopup);
+  $("#questionPopup .quitButton").addEventListener("click", () => {
+    closeQuesitonPopup();
+  });
 
-  $("#liveLocationSetting").addEventListener("input", (e) => {
+  $("#liveLocationSetting")?.addEventListener("input", (e) => {
     if (e.target.checked) {
       updateMapView([UserLocations.last.lat, UserLocations.last.lng]);
       disableMapControl(true);

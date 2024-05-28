@@ -1,7 +1,7 @@
 <html lang="en">
   <head>
     {{> head }}
-    <title>Amrita Trees | Game</title>
+    <title>AmritaTrees | Game</title>
     <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <script src="/js/app.js" type="module"></script>
@@ -9,10 +9,13 @@
   <script src="/leaflet/leaflet.js"></script>
 
 <body class="w-screen h-screen relative bg-slate-800 overflow-hidden">
-  <div id="TailwindRequiredStyles" class="hidden translate-x-[300px] animate-bounce animate-pulse">
 
-  </div>
+<div
+  id="TailwindRequiredStyles"
+  class="hidden translate-x-[300px] animate-bounce animate-pulse bg-slate-800"
+></div>
 
+  {{!-- {{> newUserPopup }} --}}
   {{> locationPermission }}
 
   <div id="contentWrapper" style="width:110vw;" class="w-screen relative transition-all">

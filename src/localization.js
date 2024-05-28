@@ -2,7 +2,7 @@ const LANGUAGES_LIST = ["english", "tamil", "telugu", "malayalam"];
 
 const RAW_LOCALIZATION = {
   title: {
-    en: "Amrita Trees",
+    en: "AmritaTrees",
     ta: "அமிர்த மரங்கள்",
     te: "అమృత వృక్షాలు",
     ml: "അമൃത മരങ്ങൾ",
@@ -20,10 +20,10 @@ const RAW_LOCALIZATION = {
     ml: "മരങ്ങൾ",
   },
   landingSubtitle1: {
-    en: "Who doesn't ❤️ Trees!!",
-    ta: "யாருக்கு இல்லை ❤️ மரங்கள்!!",
-    te: "ఎవరు చేయరు ❤️ చెట్లు!!",
-    ml: "ആരാണ് മരങ്ങൾ ❤️ ചെയ്യാത്തത്!!",
+    en: "Who doesn't ❤️ Trees",
+    ta: "மரங்களை யாருக்குத்தான் பிடிக்காது ❤️",
+    te: "చెట్లను ఎవరు ఇష్టపడరు ❤️ ",
+    ml: "ആരാണ് മരങ്ങളെ സ്നേഹിക്കാത്തത് ❤️ ",
   },
   landingSubtitle2: {
     en: "Come enjoy Geocaching with a twist",

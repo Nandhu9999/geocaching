@@ -1,7 +1,10 @@
 // GEOCACHING SERVER SCRIPT
+const fs = require("fs");
 const path = require("path");
 const fastify = require("fastify")({ logger: false });
 const db = require("./database");
+const bcrypt = require("bcrypt");
+const { dbFilePath, ifConditionFunction, numberWithCommas } = require("./serverHelper.js");
 
 // server hosting configurations
 const PORT = process.env.PORT || 4000;
@@ -17,14 +20,21 @@ fastify.register(require("@fastify/static"), {
 fastify.register(require("@fastify/formbody"));
 
 // import handlebars
+const handlebars = require("handlebars");
+const Geocache = require("./models/Geocache.js");
+const GeocacheProperties = require("./models/GeocacheProperties.js");
+const Quiz = require("./models/Quiz.js");
+const User = require("./models/User.js");
 fastify.register(require("@fastify/view"), {
-  engine: { handlebars: require("handlebars") },
+  engine: { handlebars: handlebars },
   options: {
     partials: {
       head: "/src/partials/head.handlebars",
       navbar: "/src/partials/navbar.handlebars",
-      login: "/src/partials/login.handlebars",
+      loginForm: "/src/partials/loginForm.handlebars",
+      registerForm: "/src/partials/registerForm.handlebars",
       locationPermission: "/src/partials/locationPermission.handlebars",
+      newUserPopup: "/src/partials/newUserPopup.handlebars",
       questionPopup: "/src/partials/questionPopup.handlebars",
       sideBar: "/src/partials/sideBar.handlebars",
       gameNavbar: "/src/partials/gameNavbar.handlebars",
@@ -33,39 +43,113 @@ fastify.register(require("@fastify/view"), {
     },
   },
 });
-const handlebars = require("handlebars");
-handlebars.registerHelper("ifCond", function (v1, operator, v2, options) {
-  switch (operator) {
-    case "==":
-      return v1 == v2 ? options.fn(this) : options.inverse(this);
-    case "===":
-      return v1 === v2 ? options.fn(this) : options.inverse(this);
-    case "!=":
-      return v1 != v2 ? options.fn(this) : options.inverse(this);
-    case "!==":
-      return v1 !== v2 ? options.fn(this) : options.inverse(this);
-    case "<":
-      return v1 < v2 ? options.fn(this) : options.inverse(this);
-    case "<=":
-      return v1 <= v2 ? options.fn(this) : options.inverse(this);
-    case ">":
-      return v1 > v2 ? options.fn(this) : options.inverse(this);
-    case ">=":
-      return v1 >= v2 ? options.fn(this) : options.inverse(this);
-    case "&&":
-      return v1 && v2 ? options.fn(this) : options.inverse(this);
-    case "||":
-      return v1 || v2 ? options.fn(this) : options.inverse(this);
-    default:
-      return options.inverse(this);
+handlebars.registerHelper("ifCond", ifConditionFunction);
+handlebars.registerHelper("numberWithCommas", numberWithCommas);
+
+// db setup
+let dbAlreadyExisted;
+if (fs.existsSync(dbFilePath)) {
+  dbAlreadyExisted = true;
+} else {
+  dbAlreadyExisted = false;
+}
+db.sync({ force: false }).then(async () => {
+  console.log("db is ready!", { dbAlreadyExisted });
+
+  if (!dbAlreadyExisted) {
+    // ADMIN USER
+    const hashedPassword = "abc123" || (await bcrypt.hash("abc123", 10));
+    User.create({
+      name: "admin",
+      email: "admin@nandhu.site",
+      pass: hashedPassword,
+      admin: true,
+      score: 10000000,
+    });
+    // GEOCACHE TABLE
+    const treeList = JSON.parse(fs.readFileSync("./src/.data/tree.json"));
+    treeList.forEach((treeObject) => {
+      const [lat, lng] = treeObject.coords.split(",").map(Number);
+      Geocache.create({
+        scientific_name: treeObject.scientific_name,
+        lat,
+        lng,
+      });
+    });
+    // GEOCACHE PROPERTIES TABLE
+    const treePropsList = JSON.parse(
+      fs.readFileSync("./src/.data/tree_props.json")
+    );
+    treePropsList.forEach((treeObject) => {
+      GeocacheProperties.create({
+        id: treeObject.id,
+        name: treeObject.name,
+        scientific_name: treeObject.scientific_name,
+        origin: treeObject.origin,
+        properties: treeObject.properties,
+        score: treeObject.points,
+      });
+    });
+    // QUIZ TABLE
+    const quizList = JSON.parse(fs.readFileSync("./src/.data/quiz.json"));
+    quizList.forEach((quizObject) => {
+      Quiz.create({
+        id: quizObject.quiz_id,
+        scientific_name: quizObject.scientific_name,
+        question: quizObject.question,
+        options: quizObject.options,
+        answer: quizObject.answer,
+      });
+    });
   }
 });
 
-// db setup
-db.sync().then(() => console.log("db is ready!"));
+// session setup
+fastify.register(require("@fastify/cookie"), {
+  secret: process.env.COOKIE_SECRET, // for cookies signature
+  parseOptions: {}, // options for parsing cookies
+});
+fastify.register(require("@fastify/session"), {
+  secret: process.env.SESSION_SECRET,
+  saveUninitialized: true,
+  cookie: {
+    secure: false,
+    httpOnly: true,
+    sameSite: false,
+    maxAge: 1000 * 60 * 60 * 24 * 30 * 12, // a year
+  },
+});
+
+// all requests middleware
+fastify.addHook("onRequest", (request, reply, next) => {
+  const protocol = request.raw.headers["x-forwarded-proto"]?.split(",")[0];
+  if (protocol === "http" && !request.hostname.startsWith("localhost")) {
+    reply.redirect("https://" + request.hostname + request.url);
+  }
+
+  console.log("onRequest:", request.url);
+  const sid = request.session.sessionId;
+  // console.log("sid:",sid);
+
+  const RESTRICTED_URLs = [
+    "/game",
+    "/inventory",
+    "/leaderboards",
+    "/create",
+    // "/users",
+    "/geocache",
+  ];
+  if (
+    request.session.isAuthenticated === undefined &&
+    RESTRICTED_URLs.indexOf(request.url) !== -1
+  ) {
+    reply.redirect("/");
+  }
+  next();
+});
 
 // routes
-fastify.register(require("./routes/rootRoutes.js"));
+fastify.register(require("./routes/indexRoutes.js"));
 fastify.register(require("./routes/userRoutes.js"));
 fastify.register(require("./routes/geocacheRoutes.js"));
 

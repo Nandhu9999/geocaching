@@ -1,22 +1,26 @@
 const db = require("../database");
+const Inventory = require("../models/Inventory");
 const User = require("../models/User");
 
 module.exports = {
-  getUsers: (request, reply) => {
-    const userList = User.findAll({
-      attributes: ["id", "name", "email", "admin"],
+  getUsers: async (request, reply) => {
+    const userList = await User.findAll({
+      // attributes: ["id", "name", "email", "admin"],
     });
     return reply.send({ path: "getUsers", userList });
   },
-  getUserById: (request, reply) => {
+  getUserById: async (request, reply) => {
     const { id } = request.params;
-    const user = User.findOne({
+    const user = await User.findAll({
       attributes: ["id", "name", "email", "admin"],
       where: {
-        id: id,
+        id: Number(id),
       },
     });
-    return reply.send({ path: "getUserById", user });
+    const inventory = await Inventory.findAll({
+      where: { userId: Number(id) },
+    });
+    return reply.send({ path: "getUserById", user, inventory });
   },
   createUser: (request, reply) => {
     const { email, password, confirmPassword } = request.body;

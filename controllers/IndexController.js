@@ -31,6 +31,8 @@ module.exports = {
   },
   login: async (request, reply) => {
     const { email, password } = request.body;
+    const langCode = "en";
+    const localization = LOCALIZATION[langCode];
     try {
       const hashedPassword = password || (await bcrypt.hash(password, 10));
       const user = await User.findOne({
@@ -44,11 +46,15 @@ module.exports = {
       } else {
         return reply.view("/src/pages/landing", {
           loginError: "invalid login attempt",
+          lang: langCode,
+          localization,
         });
       }
     } catch (err) {
       return reply.view("/src/pages/landing", {
         loginError: "invalid login attempt",
+        lang: langCode,
+        localization,
       });
     }
   },

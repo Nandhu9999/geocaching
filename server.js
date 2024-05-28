@@ -4,7 +4,11 @@ const path = require("path");
 const fastify = require("fastify")({ logger: false });
 const db = require("./database");
 const bcrypt = require("bcrypt");
-const { dbFilePath, ifConditionFunction, numberWithCommas } = require("./serverHelper.js");
+const {
+  dbFilePath,
+  ifConditionFunction,
+  numberWithCommas,
+} = require("./serverHelper.js");
 
 // server hosting configurations
 const PORT = process.env.PORT || 4000;
@@ -67,7 +71,7 @@ db.sync({ force: false }).then(async () => {
       score: 10000000,
     });
     // GEOCACHE TABLE
-    const treeList = JSON.parse(fs.readFileSync("./src/.data/tree.json"));
+    const treeList = JSON.parse(fs.readFileSync("./src/data/tree.json"));
     treeList.forEach((treeObject) => {
       const [lat, lng] = treeObject.coords.split(",").map(Number);
       Geocache.create({
@@ -78,7 +82,7 @@ db.sync({ force: false }).then(async () => {
     });
     // GEOCACHE PROPERTIES TABLE
     const treePropsList = JSON.parse(
-      fs.readFileSync("./src/.data/tree_props.json")
+      fs.readFileSync("./src/data/tree_props.json")
     );
     treePropsList.forEach((treeObject) => {
       GeocacheProperties.create({
@@ -91,7 +95,7 @@ db.sync({ force: false }).then(async () => {
       });
     });
     // QUIZ TABLE
-    const quizList = JSON.parse(fs.readFileSync("./src/.data/quiz.json"));
+    const quizList = JSON.parse(fs.readFileSync("./src/data/quiz.json"));
     quizList.forEach((quizObject) => {
       Quiz.create({
         id: quizObject.quiz_id,

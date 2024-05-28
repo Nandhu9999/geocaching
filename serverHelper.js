@@ -29,7 +29,7 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const dbFilePath = "./src/.data/db.sqlite";
+const dbFilePath = "./src/data/db.sqlite";
 module.exports = {
   dbFilePath,
   numberWithCommas,
